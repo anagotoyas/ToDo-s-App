@@ -4,15 +4,21 @@ import { TodoContext } from "../TodoContext";
 export const TodoForm = () => {
   const { setOpenModal, openModal, addTodo } = useContext(TodoContext);
 
-  const [newTodoValue, setNewTodoValue] = useState("")
+  const [newTodoValue, setNewTodoValue] = useState("");
 
   const onChange = (e) => {
-      setNewTodoValue(e.target.value)
-      console.log(e.target.value);
-  }
+    setNewTodoValue(e.target.value);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      onSubmit(event);
+    }
+  };
   const onSubmit = (e) => {
     e.preventDefault();
-    addTodo(newTodoValue)
+    addTodo(newTodoValue);
     setOpenModal(!openModal);
   };
   const onCancel = (e) => {
@@ -30,7 +36,7 @@ export const TodoForm = () => {
         cols="20"
         rows="5"
         placeholder="Estudiar React"
-
+        onKeyDown={handleKeyDown}
         onChange={(e) => onChange(e)}
         className="mt-5 border-blue-500 border-2 rounded-md p-2 box-shadow-md w-5/6 text-lg"
       ></textarea>
